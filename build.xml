@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project name="FeeMeAk" default="deploy" basedir="./">
+
+	<property file="build.properties" />
+
+	<property name="src.dir" location="src" />
+	<property name="deploy.dir" location="${PLUGINS_DIR}/${plugin.dir}" />
+	<property name="package.dir" location="package" />
+	<property name="tmp.dir" location="tmp" />
+
+	<!-- Définition des fichiers à inclure -->
+	<fileset dir="${src.dir}" id="plugin.path">
+		<include name="**/*.php" />
+		<include name="**/*.po" />
+		<include name="**/*.xml" />
+		<include name="**/*.html" />
+		<include name="**/*.js" />
+		<include name="**/*.css" />
+		<include name="**/*.jpg" />
+		<include name="**/*.png" />
+		<include name="**/*.gif" />
+		<include name="LICENCE" />
+	</fileset>
+
+	<!-- Déploie le plugin en local -->
+	<target name="deploy" description="Déploie le plugin à l'endroit indiqué">
+
+		<!-- On supprime le répertoire de destination s'il existe déjà -->
+		<delete dir="${deploy.dir}" verbose="false" failonerror="false" />
+
+		<!-- On copie le contenu du plugin -->
+		<copy todir="${deploy.dir}">
+			<fileset refid="plugin.path" />
+		</copy>
+
+		<!-- On modifie les infos du plugin -->
+		<antcall target="replaceInfos">
+			<param name="dir" value="${deploy.dir}" />
+		</antcall>
+
+	</target>
+
+	<!-- Prépare l'archive ZIP à distribuer -->
+	<target name="package" description="Créé l'archive ZIP pour le plugin">
+
+		<!-- On supprime le répertoire temporaire s'il existe déjà -->
+		<delete dir="${tmp.dir}/${plugin.dir}" verbose="false" failonerror="false" />
+
+		<!-- On copie tout ce qu'il faut dans un répertoire temporaire -->
+		<copy todir="${tmp.dir}/${plugin.dir}">
+			<fileset refid="plugin.path" />
+		</copy>
+
+		<!-- On modifie les infos du plugin -->
+		<antcall target="replaceInfos">
+			<param name="dir" value="${tmp.dir}/${plugin.dir}" />
+		</antcall>
+
+		<mkdir dir="${package.dir}" />
+
+		<!-- On supprime le zip s'il existe déjà -->
+		<delete file="${package.dir}/plugin-${plugin.dir}-${plugin.version}.zip" verbose="false" failonerror="false" />
+
+		<!-- On ZIP le répertoire temporaire -->
+		<zip destfile="${package.dir}/plugin-${plugin.dir}-${plugin.version}.zip">
+			<fileset dir="${tmp.dir}" />
+		</zip>
+
+		<!-- On supprime le répertoire temporaire -->
+		<delete dir="${tmp.dir}" verbose="false" failonerror="false" />
+
+	</target>
+
+	<!-- Modifie les infos du plugin -->
+	<target name="replaceInfos">
+		<property name="dir" value="${tmp.dir}" />
+
+		<replace file="${dir}/_define.php">
+			<replacefilter token="@@name@@" value="${plugin.name}" />
+			<replacefilter token="@@description@@" value="${plugin.description}" />
+			<replacefilter token="@@author@@" value="${plugin.author}" />
+			<replacefilter token="@@version@@" value="${plugin.version}" />
+			<replacefilter token="@@permissions@@" value="${plugin.permissions}" />
+		</replace>
+		
+		<replace dir="${dir}">
+			<replacefilter token="//@@licence@@" value="${plugin.licence}" />
+			<replacefilter token="@@licence@@" value="${plugin.licence}" />
+		</replace>
+	</target>
+
+</project>

@@ -1,0 +1,6 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Enable FeeMeak"
+msgstr "Activer FeeMeak sur toutes les pages de ce blog. Un lien vers le flux RSS des médias sera automatiquement ajouté dans les en-têtes HTML (non visible) de toutes vos pages, sans avoir à modifier vos templates"
+

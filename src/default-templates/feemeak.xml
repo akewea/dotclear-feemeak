@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+	<title>{{tpl:BlogName}}</title>
+	<link>{{tpl:BlogURL}}</link>
+	<atom:icon>{{tpl:FeeMeakFeedIcon}}</atom:icon>
+	<tpl:FeeMeakEntryPrevious><atom:link rel="previous" href="{{tpl:FeeMeakFeedURL continue="1"}}" /></tpl:FeeMeakEntryPrevious> 
+	<tpl:FeeMeakEntryNext><atom:link rel="next" href="{{tpl:FeeMeakFeedURL continue="1"}}" /></tpl:FeeMeakEntryNext> 
+	<tpl:FeeMeakPhotos><item>
+		<title>{{tpl:FeeMeakPhotoName}}</title>
+		<link>{{tpl:FeeMeakPhotoURL size="o"}}</link>
+		<media:description>{{tpl:FeeMeakPhotoTitle}}</media:description>
+		<media:thumbnail url="{{tpl:FeeMeakPhotoURL size="s"}}" />
+		<media:thumbnail url="{{tpl:FeeMeakPhotoURL size="t"}}" />
+		<media:thumbnail url="{{tpl:FeeMeakPhotoURL size="m"}}" />
+		<media:thumbnail url="{{tpl:FeeMeakPhotoURL size="sq"}}" />
+		<media:content url="{{tpl:FeeMeakPhotoURL size="o"}}" type="image/jpeg" />
+	</item></tpl:FeeMeakPhotos>	
+</channel>
+</rss>
